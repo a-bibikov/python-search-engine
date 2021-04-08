@@ -1,16 +1,20 @@
-import sass
+import random
 import sqlite3
-import random, string
+import string
+from tempfile import mkdtemp
+
+import sass
 from flask import Flask, render_template, request, session, redirect
 from flask_session import Session
-from tempfile import mkdtemp
 from werkzeug.security import generate_password_hash, check_password_hash
-# upujp
 
 from helpers import login_required
+# upujp
+
 
 # Configure application
 app = Flask(__name__, template_folder='templates')
+
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -32,6 +36,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+# sass compile section
 sass.compile(dirname=('static/sass', 'static/css'), output_style='compressed', source_map_embed=True)
 with open('static/css/styles.css') as example_css:
     print('sass compiled')
@@ -39,7 +44,7 @@ with open('static/css/styles.css') as example_css:
 
 def random_string(length):
     letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(length))
+    return ''.join(random.choice(letters) for _ in range(length))
 
 
 @app.route("/")
@@ -55,9 +60,9 @@ def register():
             message = 'Вы не ввели электронную почту!'
             return render_template("register.html", message=message)
 
-        with sqlite3.connect("database.sqlite") as con:
-            email = request.form.get("email").lower()
+        email = request.form.get("email").lower()
 
+        with sqlite3.connect("database.sqlite") as con:
             cur = con.cursor()
             cur.execute("SELECT email FROM accounts WHERE email = :email", {
                 'email': email
@@ -96,8 +101,9 @@ def login():
             message = 'Вы не ввели пароль!'
             return render_template("login.html", message=message)
 
+        email = request.form.get("email").lower()
+
         with sqlite3.connect("database.sqlite") as con:
-            email = request.form.get("email").lower()
             password = request.form.get("password")
             password_hash = ''
 
@@ -118,6 +124,7 @@ def login():
             else:
                 session["user_id"] = rows[0]
                 return redirect("/personal")
+
     else:
         return render_template("login.html")
 
@@ -131,18 +138,252 @@ def logout():
 @app.route("/personal")
 @login_required
 def personal():
+    crew_variants = [
+        'до 5 сотрудников',
+        '5-10 сотрудников',
+        '10-50 сотрудников',
+        '50-100 сотрудников',
+        '100-500 сотрудников',
+        '500-3000 сотрудников',
+        'более 3000 сотрудников'
+    ]
+    type_variants = [
+        'Машиностроение',
+        'Строительство',
+        'Горно-рудная промышленность',
+        'Нефть и газ',
+    ]
+
     if not session.get("user_id"):
         return render_template("login.html")
 
     user_id = session["user_id"]
     with sqlite3.connect("database.sqlite") as con:
         cur = con.cursor()
-        cur.execute("SELECT * FROM accounts WHERE id = :user_id", {
-            'user_id': user_id
-        })
+        cur.execute("""
+            SELECT * FROM accounts 
+            JOIN organizations ON organizations.account_id = accounts.id 
+            WHERE accounts.id = :account_id
+            """, {'account_id': user_id})
         rows = cur.fetchone()
-        account = {'email': rows[1]}
+
+        if rows is None:
+            return render_template("personal.html")
+        else:
+            account = {
+                'email': rows[1],
+                'inn': rows[4],
+                'kpp': rows[5],
+                'ogrn': rows[6],
+                'title': rows[7],
+                'full_title': rows[8],
+                'address_legal': rows[9],
+                'address_mail': rows[10],
+                'crew': rows[11],
+                'description': rows[12],
+                'phone_public': rows[14],
+                'website_url': rows[15],
+                'address_public': rows[16],
+                'email_public': rows[17],
+            }
 
         con.commit()
 
-    return render_template("personal.html", account=account)
+    if not account:
+        return render_template("personal.html")
+    else:
+        return render_template("personal.html",
+                               account=account, crew_variants=crew_variants, type_variants=type_variants)
+
+
+@app.route("/personal/organization_add", methods=["POST"])
+@login_required
+def organization_add():
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+        with sqlite3.connect("database.sqlite") as con:
+            inn = int(request.form.get("inn"))
+
+            cur = con.cursor()
+            cur.execute("SELECT inn FROM organizations WHERE inn = :inn", {
+                'inn': inn
+            })
+
+            if cur.fetchone() is not None:
+                message = 'Такая организация уже существует'
+                return render_template("personal.html", message=message)
+            else:
+                cur.execute("INSERT INTO organizations (inn, account_id) VALUES (:inn, :account_id)", {
+                    'inn': inn,
+                    'account_id': user_id
+                })
+
+            con.commit()
+
+        return redirect("/personal")
+    else:
+        return render_template("personal.html")
+
+
+@app.route("/personal/organization_legal_update", methods=["POST"])
+@login_required
+def organization_legal_update():
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+        with sqlite3.connect("database.sqlite") as con:
+            inn = request.form.get("inn")
+            kpp = request.form.get("kpp")
+            ogrn = request.form.get("ogrn")
+            title = request.form.get("title")
+            full_title = request.form.get("full_title")
+            address_legal = request.form.get("address_legal")
+            address_mail = request.form.get("address_mail")
+
+            cur = con.cursor()
+            print(inn)
+            print(kpp)
+            print(ogrn)
+            print(title)
+            print(full_title)
+            print(address_legal)
+            print(address_mail)
+
+            cur.execute("""
+                UPDATE organizations 
+                SET kpp = :kpp, ogrn = :ogrn, title = :title, full_title = :full_title, 
+                    address_legal = :address_legal, address_mail = :address_mail
+                WHERE account_id = :user_id AND inn = :inn;
+                """, {
+                'user_id': user_id,
+                'inn': inn,
+                'kpp': kpp,
+                'ogrn': ogrn,
+                'title': title,
+                'full_title': full_title,
+                'address_legal': address_legal,
+                'address_mail': address_mail
+            })
+
+            con.commit()
+
+        return redirect("/personal")
+    else:
+        print("GET organization_update")
+        return render_template("personal.html")
+
+
+@app.route("/personal/organization_about_update", methods=["POST"])
+@login_required
+def organization_about_update():
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+        with sqlite3.connect("database.sqlite") as con:
+            inn = request.form.get("inn")
+            crew = request.form.get("crew")
+            description = request.form.get("description")
+
+            cur = con.cursor()
+            print(inn)
+            print(crew)
+            print(description)
+
+            cur.execute("""
+                UPDATE organizations 
+                SET crew = :crew, description = :description
+                WHERE account_id = :user_id AND inn = :inn;
+                """, {
+                'user_id': user_id,
+                'inn': inn,
+                'crew': crew,
+                'description': description
+            })
+
+            con.commit()
+
+        return redirect("/personal")
+    else:
+        print("GET organization_update")
+        return render_template("personal.html")
+
+
+@app.route("/personal/organization_contacts_update", methods=["POST"])
+@login_required
+def organization_contacts_update():
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+        with sqlite3.connect("database.sqlite") as con:
+            inn = request.form.get("inn")
+            phone_public = request.form.get("phone_public")
+            website_url = request.form.get("website_url")
+            email_public = request.form.get("email_public")
+            address_public = request.form.get("address_public")
+
+            cur = con.cursor()
+            print(inn)
+            print(phone_public)
+            print(website_url)
+            print(email_public)
+            print(address_public)
+
+            cur.execute("""
+                UPDATE organizations 
+                SET phone_public = :phone_public, website_url = :website_url, 
+                    email_public = :email_public, address_public = :address_public
+                WHERE account_id = :user_id AND inn = :inn;
+                """, {
+                'user_id': user_id,
+                'inn': inn,
+                'phone_public': phone_public,
+                'website_url': website_url,
+                'email_public': email_public,
+                'address_public': address_public,
+            })
+
+            con.commit()
+
+        return redirect("/personal")
+    else:
+        print("GET organization_update")
+        return render_template("personal.html")
+
+
+@app.route("/personal/password_change", methods=["POST"])
+@login_required
+def password_change():
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+        password_current = request.form.get("password_current")
+        password_new = request.form.get("password_new")
+
+        with sqlite3.connect("database.sqlite") as con:
+            cur = con.cursor()
+            cur.execute("""
+                SELECT * FROM accounts 
+                WHERE id = :user_id
+                """, {'user_id': user_id})
+
+            rows = cur.fetchone()
+            password = rows[2]
+
+            if rows is None or not check_password_hash(password, password_current):
+                print('Error')
+            else:
+                password_hash_new = generate_password_hash(password_new, method='pbkdf2:sha256', salt_length=8)
+                cur.execute("""
+                UPDATE accounts SET password_hash = :password_hash WHERE id = :user_id;
+                """, {
+                    'password_hash': password_hash_new,
+                    'user_id': user_id
+                })
+                print('Success')
+
+            con.commit()
+
+        return redirect("/personal")
+    else:
+        return render_template("personal.html")

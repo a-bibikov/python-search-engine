@@ -15,4 +15,18 @@ $( document ).ready(function() {
     $('.form__alert').on('click', function () {
         $(this).remove();
     })
+
+    $('.tab__label').on('click', function (e) {
+        e.preventDefault();
+        const tab = $(this).attr("href");
+        console.log(tab);
+        $('.tabs__item').each(function () {
+            $(this).removeClass('active');
+        })
+        $(tab).addClass('active');
+    })
+
+    $('.alert').on('click', function () {
+        $(this).remove();
+    })
 });

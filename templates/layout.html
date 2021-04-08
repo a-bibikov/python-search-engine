@@ -67,7 +67,7 @@
             <div class="container header__wrap">
                 <div class="col col-2">
                     <a href="/" class="header__logo">
-                        <div class="header__logo-name">Поставщик</div>
+                        <div class="header__logo-name">Деловые связи</div>
                         <div class="header__logo-description">Сервис поиска производственных и оптовых компаний</div>
                     </a>
                 </div>
@@ -82,17 +82,6 @@
                 </div>
                 <div class="col col-3">
                     <div class="header__actions">
-                        <div class="header__action">
-                            <a class="header__cart" href="#">
-                                <figure class="header__action-icon">
-                                    <picture>
-                                        <img src="/static/assets/icons/cart.svg" alt="" class="header__action-image">
-                                    </picture>
-                                    <div class="header__action-value">12</div>
-                                </figure>
-                                <span class="header__action-name">Корзина</span>
-                            </a>
-                        </div>
                         <div class="header__action">
                             <a class="header__wish" href="#">
                                 <figure class="header__action-icon">
@@ -127,9 +116,9 @@
             <div class="menu__wrap">
                 <nav class="menu__nav container">
                     <div class="col col-2">
-                        <div class="menu__action">
+                        <a href="#" class="menu__action">
                             <div class="menu__action-text">По типу бизнеса</div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col col-8">
                         <ul class="menu__list">
@@ -156,5 +145,6 @@
 {#            <div class="footer__wrap">footer</div>#}
 {#        </div>#}
 {#    </footer>#}
+    {% block alerts %}{% endblock %}
 </body>
 </html>

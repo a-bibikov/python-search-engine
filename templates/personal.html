@@ -3,6 +3,16 @@
     Личный кабинет
 {% endblock %}
 
+{% block alerts %}
+    <div class="alerts">
+        {% if message %}
+            <div class="alert danger">
+                <div class="alert__message">{{ message }}</div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
 {% block main %}
     <div class="page">
         <div class="wrap">
@@ -11,98 +21,179 @@
                 <p class="page__text">С целью воспрепятствования этому, земляне начинают эксперименты с временной петлей, новые циклы возвращают время.</p>
             </div>
             <div class="page__content">
-                <form class="account__form" id="form-account">
-                    <label for="form-account-email">Электронная почта</label>
-                    <input class="account__input" disabled="disabled" name="email" id="form-account-email" type="text" value="{{ account.email }}">
-                    
-                    <fieldset class="account__fieldset">
-                        <h2>Информация о компании</h2>
-                        <div class="account__row">
-                            <label for="" class="account__label">Название</label>
-                            <input type="text" class="account__input">
+                <div class="account__form">
+                    <div class="tabs container">
+                        <div class="tab__labels col col-4">
+                            {% if not account %}
+                                <div class="tab__labels-item">
+                                    <a href="#legal" class="tab__label">
+                                        <div class="tab__label-text">Добавить компанию</div>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="tab__labels-item">
+                                    <a href="#legal" class="tab__label">
+                                        <div class="tab__label-text">Реквизиты</div>
+                                    </a>
+                                </div>
+                                <div class="tab__labels-item">
+                                    <a href="#info" class="tab__label">
+                                        <div class="tab__label-text">Информация о компании</div>
+                                    </a>
+                                </div>
+                                <div class="tab__labels-item">
+                                    <a href="#contacts" class="tab__label">
+                                        <div class="tab__label-text">Контактная информация</div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="tab__labels-item">
+                                <a href="#change" class="tab__label">
+                                    <div class="tab__label-text">Изменить пароль</div>
+                                </a>
+                            </div>
                         </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Логотип</label>
-                            <input type="text" class="account__input">
+                        <div class="tabs__list col col-6">
+                            <div class="tabs__item active" id="legal">
+                                {% if not account %}
+                                    <form action="/personal/organization_add" method="POST">
+                                        <fieldset class="account__fieldset">
+                                            <h2>Добавить компанию</h2>
+                                            <div class="account__row">
+                                                <label for="form-account-inn" class="account__label">ИНН</label>
+                                                <input class="account__input" id="form-account-inn" name="inn" type="text" />
+                                            </div>
+                                            <button type="submit" class="account__action">Добавить компанию</button>
+                                        </fieldset>
+                                    </form>
+                                {% else %}
+                                    <form action="/personal/organization_legal_update" method="POST">
+                                        <input type="hidden" name="inn" value="{{ account.inn }}">
+                                        <fieldset class="account__fieldset">
+                                            <h2>Реквизиты</h2>
+                                            <div class="account__row">
+                                                <label for="" class="account__label">ИНН</label>
+                                                <input class="account__input" disabled="disabled" value="{{ account.inn }}" type="number" />
+                                            </div>
+                                            <div class="account__row">
+                                                <label for="" class="account__label">КПП</label>
+                                                <input class="account__input" name="kpp" value="{{ account.kpp if account.kpp is not none }}" placeholder="Не указано" type="number" />
+                                            </div>
+                                            <div class="account__row">
+                                                <label for="" class="account__label">ОГРН / ОГРНИП</label>
+                                                <input class="account__input" name="ogrn" value="{{ account.ogrn if account.ogrn is not none }}" placeholder="Не указано" type="number" />
+                                            </div>
+                                            <div class="account__row">
+                                                <label for="" class="account__label">Краткое наименование организации</label>
+                                                <input class="account__input" name="title" value="{{ account.title if account.title is not none }}" placeholder="Не указано" type="text" />
+                                            </div>
+                                            <div class="account__row">
+                                                <label for="" class="account__label">Полное наименование организации</label>
+                                                <input class="account__input" name="full_title" value="{{ account.full_title if account.full_title is not none }}" placeholder="Не указано" type="text" />
+                                            </div>
+                                            <div class="account__row">
+                                                <label for="" class="account__label">Юридический адрес</label>
+                                                <input class="account__input" name="address_legal" value="{{ account.address_legal if account.address_legal is not none }}" placeholder="Не указано" type="text" />
+                                            </div>
+                                            <div class="account__row">
+                                                <label for="" class="account__label">Почтовый адрес</label>
+                                                <input class="account__input" name="address_mail" value="{{ account.address_mail if account.address_mail is not none }}" placeholder="Не указано" type="text" />
+                                            </div>
+                                        </fieldset>
+                                        <div class="account__actions">
+                                            <button class="account__action" type="submit">Сохранить</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                                {% if message %}
+                                    <div class="account__message">
+                                        {{ message }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {% if account %}
+                            <div class="tabs__item" id="info">
+                                <form action="/personal/organization_about_update" method="POST">
+                                    <input type="hidden" name="inn" value="{{ account.inn }}">
+                                    <fieldset class="account__fieldset">
+                                        <h2>Информация о компании</h2>
+                                        <div class="account__row">
+                                            <label for="" class="account__label">Вид деятельности</label>
+                                            <select class="account__select" name="" id="">
+                                                <option value="{{ account.type if account.type is not none }}" selected>{{ account.type if account.type is not none }}</option>
+                                                {% for type_variant in type_variants %}
+                                                    <option value="{{ type_variant }}">{{ type_variant }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="account__row">
+                                            <label for="" class="account__label">Кол-во сотрудников</label>
+                                            <select class="account__select" name="" id="">
+                                                <option value="{{ account.crew if account.crew is not none }}" selected>{{ account.crew if account.crew is not none }}</option>
+                                                {% for crew_variant in crew_variants %}
+                                                    <option value="{{ crew_variant }}">{{ crew_variant }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="account__row">
+                                            <label for="" class="account__label">Описание компании</label>
+                                            <textarea class="account__textarea" name="description">{{ account.description if account.description is not none }}</textarea>
+                                        </div>
+                                    </fieldset>
+                                    <div class="account__actions">
+                                        <button class="account__action" type="submit">Сохранить</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% endif %}
+                            <div class="tabs__item" id="contacts">
+                                <form action="/personal/organization_contacts_update" method="POST">
+                                    <input type="hidden" name="inn" value="{{ account.inn }}">
+                                    <fieldset class="account__fieldset">
+                                        <h2>Контактная информация</h2>
+                                        <div class="account__row">
+                                            <label for="" class="account__label">Телефон</label>
+                                            <input class="account__input" name="phone_public" value="{{ account.phone_public if account.phone_public is not none }}" type="text" />
+                                        </div>
+                                        <div class="account__row">
+                                            <label for="" class="account__label">Сайт компании</label>
+                                            <input class="account__input" name="website_url" value="{{ account.website_url if account.website_url is not none }}" type="text" />
+                                        </div>
+                                        <div class="account__row">
+                                            <label for="" class="account__label">Эл. почта компании</label>
+                                            <input class="account__input" name="email_public" value="{{ account.email_public if account.email_public is not none }}" type="text" />
+                                        </div>
+                                        <div class="account__row">
+                                            <label for="" class="account__label">Адрес</label>
+                                            <input class="account__input" name="address_public" value="{{ account.address_public if account.address_public is not none }}" type="text" />
+                                        </div>
+                                    </fieldset>
+                                    <div class="account__actions">
+                                        <button class="account__action" type="submit">Сохранить</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tabs__item" id="change">
+                                <form action="/personal/password_change" method="POST">
+                                    <fieldset class="account__fieldset">
+                                        <h2>Изменить пароль</h2>
+                                        <div class="account__row">
+                                            <label for="form-account-current-password" class="account__label">Старый пароль</label>
+                                            <input class="account__input" id="form-account-current-password" name="password_current" placeholder="******" type="text" />
+                                        </div>
+                                        <div class="account__row">
+                                            <label for="form-account-new-password" class="account__label">Новый пароль</label>
+                                            <input class="account__input" id="form-account-new-password" name="password_new" placeholder="******" type="text" />
+                                        </div>
+                                    </fieldset>
+                                    <div class="account__actions">
+                                        <button class="account__action" type="submit">Сохранить</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Описание компании</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Виды деятельности</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Кол-во сотрудников</label>
-                            <input type="text" class="account__input">
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="account__fieldset">
-                        <h2>Контактная информация</h2>
-                        <div class="account__row">
-                            <label for="" class="account__label">Телефон</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Сайт компании</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Эл. почта компании</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Адрес</label>
-                            <input type="text" class="account__input">
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="account__fieldset">
-                        <h2>Реквизиты</h2>
-                        <div class="account__row">
-                            <label for="" class="account__label">ИНН</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">КПП</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">ОГРН / ОГРНИП</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Краткое наименование организации</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Полное наименование организации</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Юридический адрес</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Почтовый адрес</label>
-                            <input type="text" class="account__input">
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="account__fieldset">
-                        <h2>Изменить пароль</h2>
-                        <div class="account__row">
-                            <label for="" class="account__label">Старый пароль</label>
-                            <input type="text" class="account__input">
-                        </div>
-                        <div class="account__row">
-                            <label for="" class="account__label">Новый пароль</label>
-                            <input type="text" class="account__input">
-                        </div>
-                    </fieldset>
-                </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

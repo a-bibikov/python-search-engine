@@ -3,6 +3,16 @@
     Авторизация
 {% endblock %}
 
+{% block alerts %}
+<div class="alerts">
+    {% if message %}
+    <div class="alert danger">
+        <div class="alert__message">{{ message }}</div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
 {% block main %}
     <div class="hpage">
         <div class="wrap">
@@ -15,22 +25,17 @@
                             <div class="form__field">
                                 <div class="form__row col col-2">
                                     <label for="form-login-email" class="form__label">Электронная почта</label>
-                                    <input class="form__input" id="form-login-email" name="email" type="text" />
+                                    <input class="form__input" id="form-login-email" name="email" type="text" value="bibikov.a@live.ru" />
                                 </div>
                                 <div class="form__row col col-2">
                                     <label for="form-login-password" class="form__label">Пароль</label>
-                                    <input class="form__input" id="form-login-password" name="password" type="password" />
+                                    <input class="form__input" id="form-login-password" name="password" type="password" value="upujp" />
                                 </div>
                             </div>
                             <div class="form__actions col col-2">
                                 <button class="form__action">Войти</button>
                                 <a href="/register" class="form__link">Регистрация</a>
                             </div>
-                            {% if message %}
-                                <div class="form__alerts">
-                                    <div class="form__alert">{{ message }}</div>
-                                </div>
-                            {% endif %}
                         </form>
                     </div>
                 </div>
