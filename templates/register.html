@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}
+    Регистрация
+{% endblock %}
+
+{% block main %}
+    <div class="hpage">
+        <div class="wrap">
+            <div class="hpage__wrap">
+                <div class="hpage__content">
+                    <div class="hpage__content-wrap">
+                        <h1 class="hpage__title">Регистрация</h1>
+                        <div class="hpage__text">Начать регистрацию очень легко, введите свою электронную почту и нажмите "Зарегистрироваться".</div>
+                        <form action="/register" class="form container" id="form-register" method="POST">
+                            <div class="form__field">
+                                <div class="form__row col col-2">
+                                    <label for="form-register-email" class="form__label">Электронная почта</label>
+                                    <input class="form__input" id="form-register-email" name="email" type="email" />
+                                </div>
+                            </div>
+                            <div class="form__actions col col-2">
+                                <button class="form__action">Зарегистрироваться</button>
+                                <a href="/login" class="form__link">Уже зарегистрированы?</a>
+                            </div>
+                            {% if message %}
+                            <div class="form__alerts">
+                                <div class="form__alert">{{ message }}</div>
+                            </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <div class="hpage__info">
+                    <div class="hpage__info-wrap">
+                        <ul class="hpage__list">
+                            <li class="hpage__item">Введите свою электронную почту, на которую вы получите пароль для продолжения регистрации.</li>
+                            <li class="hpage__item">Пароль будет сгенерирован автоматически, вы сможете изменить его в любое время.</li>
+                            <li class="hpage__item">Все инструкции по регистрации и данные доступа к личному кабинету вы так же получите по электронной почте.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

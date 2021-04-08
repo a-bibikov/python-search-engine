@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+    <script src="/static/scripts/main.js"></script>
+    <title>Biz: {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="top">
+        <div class="wrap">
+            <div class="container top__wrap">
+                <div class="col col-2">
+                    <div class="top__email">
+                        <a href="#" class="top__email-link">info@abibikov.com</a>
+                    </div>
+                </div>
+                <div class="col col-3">
+                    <div class="top__comment">
+                        <div class="top__comment-text">Бесплатная доставка при заказе от 10 000 рублей</div>
+                    </div>
+                </div>
+                <div class="col col-3">
+                    <div class="top__city">
+                        <span class="top__city-title">Ваш город:</span>
+                        <span class="top__city-value">Санкт Петербург</span>
+                    </div>
+                </div>
+                <div class="col col-2">
+                    <div class="top__social">
+                        <a href="#" class="top__social-link">
+                            <img src="/static/assets/icons/youtube.svg" alt="" class="top__social-icon">
+                        </a>
+                        <a href="#" class="top__social-link">
+                            <img src="/static/assets/icons/facebook.svg" alt="" class="top__social-icon">
+                        </a>
+                        <a href="#" class="top__social-link">
+                            <img src="/static/assets/icons/instagram.svg" alt="" class="top__social-icon">
+                        </a>
+                    </div>
+                </div>
+                <div class="col col-2">
+                    {% if session.user_id %}
+                        <div class="top__account">
+                            <a href="/personal" class="top__account-action">Личный кабинет</a>
+                            <a href="/logout" class="top__account-action top__account-logout">Выход</a>
+                        </div>
+                    {% else %}
+                        <div class="top__account">
+                            <a href="/login" class="top__account-action">Вход</a>
+                            <a href="/register" class="top__account-action">Регистрация</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="header">
+        <div class="wrap">
+            <div class="container header__wrap">
+                <div class="col col-2">
+                    <a href="/" class="header__logo">
+                        <div class="header__logo-name">Поставщик</div>
+                        <div class="header__logo-description">Сервис поиска производственных и оптовых компаний</div>
+                    </a>
+                </div>
+                <div class="col col-5">
+                    <div class="header__search">
+                        <form action="" class="header__search-form">
+                            <input autocomplete="off" class="header__search-input" id="header-search-input" name="search" type="text" />
+                            <label class="header__search-label" for="header-search-input">Поиск по каталогу</label>
+                            <input class="header__search-submit" type="submit" value="Найти" />
+                        </form>
+                    </div>
+                </div>
+                <div class="col col-3">
+                    <div class="header__actions">
+                        <div class="header__action">
+                            <a class="header__cart" href="#">
+                                <figure class="header__action-icon">
+                                    <picture>
+                                        <img src="/static/assets/icons/cart.svg" alt="" class="header__action-image">
+                                    </picture>
+                                    <div class="header__action-value">12</div>
+                                </figure>
+                                <span class="header__action-name">Корзина</span>
+                            </a>
+                        </div>
+                        <div class="header__action">
+                            <a class="header__wish" href="#">
+                                <figure class="header__action-icon">
+                                    <picture>
+                                        <img src="/static/assets/icons/wish.svg" alt="" class="header__action-image">
+                                    </picture>
+                                    <div class="header__action-value">12</div>
+                                </figure>
+                                <span class="header__action-name">Избранное</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-2">
+                    <div class="header__contacts">
+                        <figure class="header__contacts-icon">
+                            <picture>
+                                <img src="/static/assets/icons/phone.svg" alt="" class="header__contacts-image">
+                            </picture>
+                        </figure>
+                        <div class="header__phone">
+                            <a class="header__phone-link" href="#">8 800 123 98 83</a>
+                            <div class="header__contacts-comment">Звонок по России Бесплатный</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="menu">
+        <div class="wrap">
+            <div class="menu__wrap">
+                <nav class="menu__nav container">
+                    <div class="col col-2">
+                        <div class="menu__action">
+                            <div class="menu__action-text">По типу бизнеса</div>
+                        </div>
+                    </div>
+                    <div class="col col-8">
+                        <ul class="menu__list">
+                            <li class="menu__item">
+                                <a href="#" class="menu__link">Одежда</a>
+                            </li>
+                            <li class="menu__item">
+                                <a href="#" class="menu__link">Мебель</a>
+                            </li>
+                            <li class="menu__item">
+                                <a href="#" class="menu__link">Стройматериалы</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <main class="main">
+        {% block main %}{% endblock %}
+    </main>
+{#    <footer class="footer">#}
+{#        <div class="wrap">#}
+{#            <div class="footer__wrap">footer</div>#}
+{#        </div>#}
+{#    </footer>#}
+</body>
+</html>

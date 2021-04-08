@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}
+    Авторизация
+{% endblock %}
+
+{% block main %}
+    <div class="hpage">
+        <div class="wrap">
+            <div class="hpage__wrap">
+                <div class="hpage__content">
+                    <div class="hpage__content-wrap">
+                        <h1 class="hpage__title">Авторизация</h1>
+                        <div class="hpage__text">Для входа используйте вашу электронную почту и пароль</div>
+                        <form action="/login" class="form container" id="form-login" method="POST">
+                            <div class="form__field">
+                                <div class="form__row col col-2">
+                                    <label for="form-login-email" class="form__label">Электронная почта</label>
+                                    <input class="form__input" id="form-login-email" name="email" type="text" />
+                                </div>
+                                <div class="form__row col col-2">
+                                    <label for="form-login-password" class="form__label">Пароль</label>
+                                    <input class="form__input" id="form-login-password" name="password" type="password" />
+                                </div>
+                            </div>
+                            <div class="form__actions col col-2">
+                                <button class="form__action">Войти</button>
+                                <a href="/register" class="form__link">Регистрация</a>
+                            </div>
+                            {% if message %}
+                                <div class="form__alerts">
+                                    <div class="form__alert">{{ message }}</div>
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <div class="hpage__info">
+                    <div class="hpage__info-wrap">
+                        <ul class="hpage__list">
+                            <li class="hpage__item">С целью воспрепятствования этому, земляне начинают эксперименты с временной петлей, новые циклы возвращают время.</li>
+                            <li class="hpage__item">С целью воспрепятствования этому, земляне начинают эксперименты с временной петлей, новые циклы возвращают время.</li>
+                            <li class="hpage__item">С целью воспрепятствования этому, земляне начинают эксперименты с временной петлей, новые циклы возвращают время.</li>
+                            <li class="hpage__item">С целью воспрепятствования этому, земляне начинают эксперименты с временной петлей, новые циклы возвращают время.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

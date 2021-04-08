@@ -1,0 +1,493 @@
+body
+  margin: 0
+  padding: 0
+  font-family: "PT Sans", sans-serif
+  min-width: 1440px
+
+.top
+  background: #2B2B2B
+  display: flex
+
+// general styles
+.wrap
+  width: 1440px
+  padding-left: 20px
+  padding-right: 20px
+  box-sizing: border-box
+  margin: 0 auto
+  position: relative
+  z-index: 1
+.container
+  display: flex
+  flex-wrap: wrap
+  margin-left: -8px
+  margin-right: -8px
+.col
+  margin-left: 8px
+  margin-right: 8px
+.col-1
+  width: 102px
+.col-2
+  width: 220px
+.col-3
+  width: 338px
+.col-4
+  width: 456px
+.col-5
+  width: 574px
+.col-6
+  width: 692px
+.col-7
+  width: 810px
+.col-8
+  width: 928px
+.col-9
+  width: 1046px
+.col-10
+  width: 1164px
+.col-11
+  width: 1282px
+.col-12
+  width: 1400px
+// general styles end
+
+// top
+.top
+  padding-top: 2px
+  padding-bottom: 4px
+.top__wrap
+  align-items: center
+.top__email-link
+  color: #ffffff
+  display: inline-flex
+  font-size: 12px
+.top__comment
+  padding-left: 24px
+  box-sizing: border-box
+.top__comment-text
+  color: #ffffff
+  font-size: 12px
+  opacity: 0.65
+  display: inline-flex
+.top__city-title
+  color: #ffffff
+  font-size: 12px
+.top__city-value
+  color: #ffffff
+  font-size: 12px
+.top__social
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  padding-top: 4px
+.top__social-link
+  border-radius: 4px
+  display: block
+  margin-right: 12px
+  opacity: 0.3
+.top__social-icon
+  height: 20px
+  object-fit: cover
+.top__account
+  display: flex
+  flex-wrap: wrap
+  justify-content: flex-end
+.top__account-action
+    font-size: 12px
+    display: inline-flex
+    padding: 4px
+    margin-left: 12px
+    border: 0
+    appearance: none
+    background: transparent
+    font-family: "PT Sans", sans-serif
+    outline: none
+    color: #ffffff
+.top__account-logout
+  opacity: 0.65
+  text-decoration: none
+
+
+.header
+  background: #26303B
+  padding-top: 32px
+  padding-bottom: 32px
+.header__wrap
+  align-items: center
+.header__logo
+  display: block
+  text-decoration: none
+.header__logo-name
+  font-size: 24px
+  font-weight: 700
+  font-family: "Roboto Slab", sans-serif
+  color: #ffffff
+.header__logo-description
+  color: #ffffff
+  opacity: 0.65
+  font-size: 12px
+.header__search
+  padding-right: 118px
+  box-sizing: border-box
+.header__search-form
+  padding: 0 24px
+  position: relative
+  display: flex
+  flex-wrap: wrap
+  width: 100%
+.header__search-label
+  position: absolute
+  top: -16px
+  left: 24px
+  font-size: 12px
+  color: #ffffff
+  opacity: 0.65
+.header__search-input
+  background: #455362
+  border: 0
+  appearance: none
+  font-family: "PT Sans", sans-serif
+  font-size: 14px
+  color: #ffffff
+  border-radius: 0
+  outline: none
+  padding: 8px 12px
+  width: 338px
+  letter-spacing: 0.5px
+.header__actions
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+.header__action
+  &:not(:last-child)
+    margin-right: 24px
+  & a
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    text-decoration: none
+.header__search-submit
+  color: #ffffff
+  outline: none
+  padding: 8px 20px
+  appearance: none
+  background: #E60047
+  font-family: "Roboto Slab", sans-serif
+  font-size: 12px
+  font-weight: 600
+  border: 0
+.header__action-icon
+  margin: 0
+  padding: 0
+  position: relative
+  width: 28px
+  height: 28px
+.header__action-value
+  position: absolute
+  top: -6px
+  right: -6px
+  background: #E60047
+  display: flex
+  padding: 4px 6px
+  border-radius: 50px
+  color: #ffffff
+  font-weight: 600
+  font-size: 10px
+.header__action-name
+  color: #ffffff
+  font-size: 16px
+  padding-left: 16px
+  font-weight: 600
+.header__contacts
+  display: flex
+  flex-wrap: wrap
+  justify-content: flex-end
+  text-align: right
+.header__contacts-icon
+  width: 28px
+  height: 28px
+  margin: 0
+  padding: 0
+  & picture
+    display: block
+.header__contacts-image
+  width: 100%
+  height: 100%
+  object-fit: cover
+.header__phone
+  padding-left: 16px
+  box-sizing: border-box
+.header__phone-link
+  font-size: 20px
+  font-weight: 600
+  font-family: "Roboto Slab", sans-serif
+  color: #ffffff
+  text-decoration: none
+  display: block
+.header__contacts-comment
+  font-size: 10px
+  opacity: 0.65
+  color: #ffffff
+// header end
+
+.menu
+  background: #f2f2f2
+.menu__nav
+  align-items: center
+.menu__action
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  background: #007FFF
+  padding: 24px 28px
+  justify-content: center
+  text-align: center
+.menu__action-text
+  color: #ffffff
+  font-size: 16px
+  font-weight: 600
+.menu__list
+  display: flex
+  flex-wrap: wrap
+  justify-content: flex-start
+  list-style: none
+  padding: 0 0 0 24px
+  margin: 0
+.menu__item
+  &:not(:last-child)
+    margin-right: 40px
+.menu__link
+  font-family: "PT Sans", sans-serif
+  text-decoration: none
+  color: #2b2b2b
+  font-size: 16px
+
+.triggers
+  background: #26303B
+  padding-top: 52px
+  padding-bottom: 40px
+.trigger
+  display: flex
+  flex-wrap: wrap
+  justify-content: flex-start
+  align-items: flex-start
+.trigger__icon
+  margin: 0
+  width: 60px
+  position: relative
+  text-align: center
+  &:after
+    width: 24px
+    height: 24px
+    background: #E60047
+    border-radius: 50px
+    content: ''
+    display: block
+    margin: 24px auto 0
+.trigger__info
+  padding-left: 24px
+  width: calc(100% - 60px)
+  box-sizing: border-box
+.trigger__name
+  font-size: 16px
+  color: #ffffff
+  font-weight: 600
+  font-family: "Roboto Slab", sans-serif
+.trigger__text
+  font-size: 14px
+  color: #ffffff
+  line-height: 1.5
+  opacity: 0.65
+  margin-top: 8px
+
+.welcome
+  background: #333E57 url("/static/assets/images/welcome/1.jpg") center no-repeat
+  background-size: cover
+  padding-top: 32px
+  padding-bottom: 32px
+.welcome__wrap
+  padding-left: 118px
+  padding-right: 118px
+  height: 100%
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  min-height: 480px
+.welcome__title
+  font-size: 60px
+  font-weight: 700
+  font-family: "Roboto Slab", sans-serif
+  color: #ffffff
+.welcome__text
+  color: #ffffff
+  font-size: 20px
+  opacity: 0.65
+  max-width: 692px
+  line-height: 1.25
+  margin-top: 16px
+.welcome__actions
+  margin-top: 48px
+  display: flex
+  flex-wrap: wrap
+.welcome__action
+  background: #E60047
+  padding: 12px 28px
+  text-decoration: none
+  color: #ffffff
+  border-radius: 4px
+  border: 2px solid #E60047
+  &.welcome__action--transparent
+    background: transparent
+    border: 2px solid #ffffff
+  &:not(:last-child)
+    margin-right: 24px
+
+
+.form__row
+  &:not(:last-child)
+    margin-bottom: 24px
+.form__label
+  color: #ffffff
+  opacity: 0.65
+  font-size: 16px
+  display: block
+  width: 100%
+  margin-bottom: 8px
+.form__input
+  color: #ffffff
+  padding: 12px 16px
+  border: 1px solid #ADADAD
+  background: transparent
+  font-family: "PT Sans", sans-serif
+  border-radius: 4px
+  width: 100%
+  outline: none
+  font-size: 16px
+  &.error
+    border-color: #E60047
+.form__actions
+  margin-top: 24px
+  width: 100%
+.form__action
+  background: #E60047
+  padding: 16px 24px
+  border: 0
+  color: #ffffff
+  font-size: 16px
+  border-radius: 4px
+  margin-right: 24px
+  font-family: "Roboto Slab", sans-serif
+.form__link
+  color: #ffffff
+  font-size: 14px
+  opacity: 0.65
+.form__alerts
+  margin-top: 24px
+  padding-left: 8px
+  padding-right: 8px
+  box-sizing: border-box
+  width: 100%
+  position: relative
+.form__alert
+  position: absolute
+  padding: 12px 24px
+  background: #ffffff
+  border-radius: 4px
+  font-size: 14px
+  line-height: 1.5
+  display: inline-flex
+
+
+
+.hpage
+  background: #333E57 url("/static/assets/images/welcome/1.jpg") center fixed no-repeat
+  background-size: cover
+  overflow: hidden
+  position: relative
+  &:after
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    content: ''
+    display: block
+    background: rgba(0,0,0,0.5)
+    z-index: 0
+.hpage__wrap
+  display: flex
+  flex-wrap: wrap
+  min-height: calc(100vh - 68px - 126px - 27px)
+  align-items: stretch
+.hpage__content
+  width: 50%
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  padding: 118px
+  box-sizing: border-box
+.hpage__info
+  width: 50%
+  display: flex
+  flex-wrap: wrap
+  background: #26303B
+  align-items: center
+  position: relative
+  padding: 118px
+  box-sizing: border-box
+  &:after
+    position: absolute
+    left: 0
+    top: 0
+    bottom: 0
+    width: 200%
+    background: #26303B
+    content: ''
+    display: block
+    z-index: 0
+.hpage__info-wrap
+  position: relative
+  z-index: 1
+  margin-bottom: 80px
+.hpage__content-wrap
+  margin-bottom: 80px
+.hpage__title
+  font-size: 32px
+  color: #ffffff
+  font-weight: 700
+.hpage__text
+  color: #ffffff
+  font-size: 14px
+  opacity: 0.65
+  line-height: 1.5
+  margin-bottom: 40px
+.hpage__item
+  color: #ffffff
+  line-height: 1.5
+  opacity: 0.65
+  &:not(:last-child)
+    margin-bottom: 24px
+
+
+
+.page
+  background: #455362
+  padding-bottom: 1000px
+.page__info
+  padding: 40px 118px 60px
+  position: relative
+.page__info-wrap
+  padding-left: 118px
+.page__title
+  font-weight: 700
+  font-size: 44px
+  margin-bottom: 16px
+.page__text
+  font-size: 16px
+  line-height: 1.5
+  margin-top: 8px
+  max-width: 692px
+  opacity: 0.65
+.page__content
+  padding-left: 118px
+  padding-right: 118px

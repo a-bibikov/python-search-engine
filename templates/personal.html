@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% block title %}
+    Личный кабинет
+{% endblock %}
+
+{% block main %}
+    <div class="page">
+        <div class="wrap">
+            <div class="page__info">
+                <h1 class="page__title">Личный кабинет</h1>
+                <p class="page__text">С целью воспрепятствования этому, земляне начинают эксперименты с временной петлей, новые циклы возвращают время.</p>
+            </div>
+            <div class="page__content">
+                <form class="account__form" id="form-account">
+                    <label for="form-account-email">Электронная почта</label>
+                    <input class="account__input" disabled="disabled" name="email" id="form-account-email" type="text" value="{{ account.email }}">
+                    
+                    <fieldset class="account__fieldset">
+                        <h2>Информация о компании</h2>
+                        <div class="account__row">
+                            <label for="" class="account__label">Название</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Логотип</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Описание компании</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Виды деятельности</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Кол-во сотрудников</label>
+                            <input type="text" class="account__input">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="account__fieldset">
+                        <h2>Контактная информация</h2>
+                        <div class="account__row">
+                            <label for="" class="account__label">Телефон</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Сайт компании</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Эл. почта компании</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Адрес</label>
+                            <input type="text" class="account__input">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="account__fieldset">
+                        <h2>Реквизиты</h2>
+                        <div class="account__row">
+                            <label for="" class="account__label">ИНН</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">КПП</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">ОГРН / ОГРНИП</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Краткое наименование организации</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Полное наименование организации</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Юридический адрес</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Почтовый адрес</label>
+                            <input type="text" class="account__input">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="account__fieldset">
+                        <h2>Изменить пароль</h2>
+                        <div class="account__row">
+                            <label for="" class="account__label">Старый пароль</label>
+                            <input type="text" class="account__input">
+                        </div>
+                        <div class="account__row">
+                            <label for="" class="account__label">Новый пароль</label>
+                            <input type="text" class="account__input">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
