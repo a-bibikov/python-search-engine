@@ -73,14 +73,14 @@ body
   width: 100%
   &:not(:first-child)
     margin-top: 24px
-  &--danger:before
+  &.danger:before
     width: 40px
     height: 40px
     background: url("/static/assets/icons/error.svg") center no-repeat
     content: ''
     display: block
     background-size: 100%
-  &--success:before
+  &.success:before
     width: 40px
     height: 40px
     background: url("/static/assets/icons/check.svg") center no-repeat
@@ -360,10 +360,12 @@ body
   align-items: center
   min-height: 480px
 .welcome__title
-  font-size: 60px
+  font-size: 44px
   font-weight: 700
   font-family: "Roboto Slab", sans-serif
   color: #ffffff
+.welcome__title-line-2
+  color: #ffef36
 .welcome__text
   color: #ffffff
   font-size: 20px
@@ -519,6 +521,8 @@ body
 .page
   background: #ffffff
   padding-bottom: 200px
+.page--dark
+  background: #26303B
 .page__info
   padding: 40px 118px 60px
   position: relative
@@ -623,3 +627,139 @@ body
   border-radius: 4px
   border: 0
 
+
+.search__page
+  background: #26303B
+  padding-top: 80px
+  padding-bottom: 120px
+.search__page-wrap
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  text-align: center
+.search__page-title
+  font-size: 44px
+  color: #ffffff
+  margin-bottom: 16px
+.search__page-text
+  color: #ffffff
+  font-size: 16px
+  line-height: 1.5
+  opacity: 0.65
+.search__page-form
+  margin-top: 40px
+  padding-left: 118px
+  padding-right: 118px
+.search__form
+  display: flex
+  flex-wrap: wrap
+  align-items: stretch
+  justify-content: space-between
+  width: 100%
+.search__form-select
+  background: #ffffff
+  appearance: none
+  padding: 16px 20px
+  margin-right: 16px
+  border-radius: 4px
+  border: 0
+  font-size: 16px
+  font-family: "PT Sans", sans-serif
+  outline: none
+  height: 100%
+  box-sizing: border-box
+  min-width: 240px
+.search__form-input
+  appearance: none
+  min-width: 420px
+  margin-right: 16px
+  padding-left: 20px
+  padding-right: 20px
+  border-radius: 4px
+  border: 0
+  font-size: 16px
+  font-family: "PT Sans", sans-serif
+  outline: none
+  height: 100%
+  box-sizing: border-box
+.search__form-submit
+  padding-left: 40px
+  padding-right: 40px
+  background: #E60047
+  color: #ffffff
+  font-size: 16px
+  appearance: none
+  border-radius: 4px
+  border: 0
+  font-family: "PT Sans", sans-serif
+  outline: none
+  height: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  text-align: center
+  box-sizing: border-box
+
+.search__head
+  background: #26303B
+  padding-top: 20px
+  padding-bottom: 28px
+.search__head-wrap
+  padding-left: 118px
+  padding-right: 118px
+.search__result-title
+  color: #ffffff
+.search__result
+  margin-top: 40px
+.search__result-wrap
+  padding-left: 118px
+  padding-right: 118px
+  box-sizing: border-box
+.search__result-list
+  width: 697px
+.search__result-item
+  &:not(:last-child)
+    margin-bottom: 40px
+.search__card-title
+  margin: 0
+  font-weight: 400
+  font-size: 20px
+.search__card-link
+  color: #007FFF
+  text-decoration: none
+  &:hover
+    text-decoration: underline
+.search__card-body
+  margin-top: 12px
+.search__card-description
+  font-size: 14px
+  line-height: 1.5
+  opacity: 0.8
+.search__card-meta
+  display: flex
+  flex-wrap: wrap
+  align-items: baseline
+  margin-top: 8px
+.search__card-meta-item
+  font-size: 12px
+  margin-right: 12px
+.search__card-meta-link
+  color: #2b2b2b
+  opacity: 0.65
+  text-decoration: none
+  &:hover
+    border-bottom: 1px solid
+.search__card-rating
+  margin-top: 16px
+.search__card-stars
+  display: flex
+  flex-wrap: wrap
+.search__card-star
+  width: 20px
+  display: inline-flex
+  &:not(:last-child)
+    margin-right: 4px
+  & img
+    width: 100%
+    display: block

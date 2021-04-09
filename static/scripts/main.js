@@ -29,4 +29,11 @@ $( document ).ready(function() {
     $('.alert').on('click', function () {
         $(this).remove();
     })
+
+    const phoneInput = document.getElementById('form-account-phone');
+    const websiteInput = document.getElementById('form-account-website');
+    const phoneMaskOptions = {mask: '+{7} (000) 000 00 00'};
+    const websiteMaskOptions = {mask: 'http://a*'};
+    const phoneMask = IMask(phoneInput, phoneMaskOptions);
+    const websiteMask = IMask(websiteInput, websiteMaskOptions);
 });

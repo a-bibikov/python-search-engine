@@ -1,0 +1,22 @@
+<form action="/organizations" class="search__form" method="POST">
+    <div class="search__form-col">
+        <select name="" id="" class="search__form-select">
+            <option value="">Машиностроение</option>
+            <option value="">Сырьё</option>
+            <option value="">Изделия для производства</option>
+            <option value="">Инструмент</option>
+        </select>
+    </div>
+    <div class="search__form-col">
+        <select name="" id="" class="search__form-select">
+            <option value="">Москва</option>
+            <option value="">Санкт-Петербург</option>
+        </select>
+    </div>
+    <div class="search__form-col">
+        <input class="search__form-input" name="keyword" type="text" value="{{ keyword }}" />
+    </div>
+    <div class="search__form-col">
+        <button class="search__form-submit" type="submit">Запустить подбор</button>
+    </div>
+</form>

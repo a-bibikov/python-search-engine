@@ -145,19 +145,18 @@
                                     </div>
                                 </form>
                             </div>
-                            {% endif %}
                             <div class="tabs__item" id="contacts">
                                 <form action="/personal/organization_contacts_update" method="POST">
                                     <input type="hidden" name="inn" value="{{ account.inn }}">
                                     <fieldset class="account__fieldset">
                                         <h2>Контактная информация</h2>
                                         <div class="account__row">
-                                            <label for="" class="account__label">Телефон</label>
-                                            <input class="account__input" name="phone_public" value="{{ account.phone_public if account.phone_public is not none }}" type="text" />
+                                            <label for="form-account-phone" class="account__label">Телефон</label>
+                                            <input class="account__input" id="form-account-phone" name="phone_public" value="{{ account.phone_public if account.phone_public is not none }}" type="text" />
                                         </div>
                                         <div class="account__row">
-                                            <label for="" class="account__label">Сайт компании</label>
-                                            <input class="account__input" name="website_url" value="{{ account.website_url if account.website_url is not none }}" type="text" />
+                                            <label for="form-account-website" class="account__label">Сайт компании</label>
+                                            <input class="account__input" id="form-account-website" name="website_url" value="{{ account.website_url if account.website_url is not none }}" type="text" />
                                         </div>
                                         <div class="account__row">
                                             <label for="" class="account__label">Эл. почта компании</label>
@@ -173,6 +172,7 @@
                                     </div>
                                 </form>
                             </div>
+                            {% endif %}
                             <div class="tabs__item" id="change">
                                 <form action="/personal/password_change" method="POST">
                                     <fieldset class="account__fieldset">

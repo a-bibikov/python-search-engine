@@ -1,7 +1,11 @@
+import os
+import smtplib
 import random
 import sqlite3
 import string
+import sys
 from tempfile import mkdtemp
+from configparser import ConfigParser
 
 import sass
 from flask import Flask, render_template, request, session, redirect
@@ -10,6 +14,27 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from helpers import login_required
 # upujp
+
+
+EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+
+
+crew_variants = [
+    'до 5 сотрудников',
+    '5-10 сотрудников',
+    '10-50 сотрудников',
+    '50-100 сотрудников',
+    '100-500 сотрудников',
+    '500-3000 сотрудников',
+    'более 3000 сотрудников'
+]
+type_variants = [
+    'Машиностроение',
+    'Строительство',
+    'Горно-рудная промышленность',
+    'Нефть и газ',
+]
 
 
 # Configure application
@@ -48,9 +73,36 @@ def random_string(length):
 
 
 @app.route("/")
-@login_required
 def index():
     return render_template("index.html")
+
+
+@app.route("/organizations", methods=["GET", "POST"])
+def organizations():
+    if request.method == "POST":
+        if not request.form.get("keyword"):
+            message = 'Введите запрос'
+            message_type = 'danger'
+            print(message)
+            return render_template("organizations.html", message=message, message_type=message_type)
+
+        keyword = request.form.get("keyword").lower()
+
+        with sqlite3.connect("database.sqlite") as con:
+            def lower_string(_str):
+                return str(_str).lower()
+
+            cur = con.cursor()
+            con.create_function("lower_data", 1, lower_string)
+            query = "SELECT * FROM organizations WHERE lower_data(title) LIKE (?) OR lower_data(description) LIKE (?)"
+            cur.execute(query, ('%' + keyword + '%', '%' + keyword + '%',))
+
+            rows = cur.fetchall()
+            con.commit()
+
+        return render_template("organizations.html", rows=rows, keyword=keyword)
+    else:
+        return render_template("organizations.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -83,6 +135,12 @@ def register():
                 })
 
             con.commit()
+
+        smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
+        smtpObj.starttls()
+        smtpObj.login('alexander.bibikov.87@gmail.com', 'Alex-1387')
+        smtpObj.sendmail("alexander.bibikov.87@gmail.com", "bibikov.a@live.ru", f"go to bed! {password}")
+        smtpObj.quit()
 
         return render_template("register.html")
     else:
@@ -138,22 +196,6 @@ def logout():
 @app.route("/personal")
 @login_required
 def personal():
-    crew_variants = [
-        'до 5 сотрудников',
-        '5-10 сотрудников',
-        '10-50 сотрудников',
-        '50-100 сотрудников',
-        '100-500 сотрудников',
-        '500-3000 сотрудников',
-        'более 3000 сотрудников'
-    ]
-    type_variants = [
-        'Машиностроение',
-        'Строительство',
-        'Горно-рудная промышленность',
-        'Нефть и газ',
-    ]
-
     if not session.get("user_id"):
         return render_template("login.html")
 
