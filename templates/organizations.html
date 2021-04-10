@@ -41,16 +41,24 @@
         </div>
     {% endif %}
     {% if rows %}
-    <div class="search__result">
-        <div class="wrap">
-            <div class="search__result-wrap">
-                <div class="search__result-list">
-                    {% for row in rows %}
-                        {% include "search_card.html" %}
-                    {% endfor %}
+        <div class="search__result">
+            <div class="wrap">
+                <div class="search__result-wrap">
+                    <div class="search__result-list">
+                        {% for row in rows %}
+                            {% include "search_card.html" %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% elif (rows is defined) and rows|length == 0 %}
+        <div class="search__result">
+            <div class="wrap">
+                <div class="search__result-wrap">
+                    Ничего не найдено
+                </div>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

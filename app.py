@@ -3,9 +3,7 @@ import smtplib
 import random
 import sqlite3
 import string
-import sys
 from tempfile import mkdtemp
-from configparser import ConfigParser
 
 import sass
 from flask import Flask, render_template, request, session, redirect
@@ -34,6 +32,22 @@ type_variants = [
     'Строительство',
     'Горно-рудная промышленность',
     'Нефть и газ',
+]
+district_variants = [
+    'Москва и Московская область',
+    'Центральный ФО',
+    'Северо-Западный ФО',
+    'Приволжский ФО',
+    'Южный ФО',
+    'Северо-Кавказский ФО',
+    'Уральский ФО',
+    'Сибирский ФО',
+    'Дальневосточный ФО',
+]
+keywords_dictionary = [
+    'инструмент',
+    'инструкция',
+    'инвертор'
 ]
 
 
@@ -87,6 +101,8 @@ def organizations():
             return render_template("organizations.html", message=message, message_type=message_type)
 
         keyword = request.form.get("keyword").lower()
+        type_variant_selected = request.form.get("type")
+        district_variant_selected = request.form.get("district")
 
         with sqlite3.connect("database.sqlite") as con:
             def lower_string(_str):
@@ -98,11 +114,19 @@ def organizations():
             cur.execute(query, ('%' + keyword + '%', '%' + keyword + '%',))
 
             rows = cur.fetchall()
+
+            print(rows)
             con.commit()
 
-        return render_template("organizations.html", rows=rows, keyword=keyword)
+        return render_template("organizations.html",
+                               rows=rows, keyword=keyword,
+                               type_variants=type_variants, type_variant_selected=type_variant_selected,
+                               district_variants=district_variants, district_variant_selected=district_variant_selected
+                               )
     else:
-        return render_template("organizations.html")
+
+        return render_template("organizations.html",
+                               type_variants=type_variants, district_variants=district_variants)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -134,13 +158,13 @@ def register():
                     'password_hash': password_hash
                 })
 
-            con.commit()
+                smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
+                smtpObj.starttls()
+                smtpObj.login('alexander.bibikov.87@gmail.com', 'Alex-1387')
+                smtpObj.sendmail("alexander.bibikov.87@gmail.com", "bibikov.a@live.ru", f"go to bed! {password}")
+                smtpObj.quit()
 
-        smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
-        smtpObj.starttls()
-        smtpObj.login('alexander.bibikov.87@gmail.com', 'Alex-1387')
-        smtpObj.sendmail("alexander.bibikov.87@gmail.com", "bibikov.a@live.ru", f"go to bed! {password}")
-        smtpObj.quit()
+            con.commit()
 
         return render_template("register.html")
     else:
@@ -284,14 +308,6 @@ def organization_legal_update():
             address_mail = request.form.get("address_mail")
 
             cur = con.cursor()
-            print(inn)
-            print(kpp)
-            print(ogrn)
-            print(title)
-            print(full_title)
-            print(address_legal)
-            print(address_mail)
-
             cur.execute("""
                 UPDATE organizations 
                 SET kpp = :kpp, ogrn = :ogrn, title = :title, full_title = :full_title, 
@@ -328,10 +344,6 @@ def organization_about_update():
             description = request.form.get("description")
 
             cur = con.cursor()
-            print(inn)
-            print(crew)
-            print(description)
-
             cur.execute("""
                 UPDATE organizations 
                 SET crew = :crew, description = :description
@@ -365,12 +377,6 @@ def organization_contacts_update():
             address_public = request.form.get("address_public")
 
             cur = con.cursor()
-            print(inn)
-            print(phone_public)
-            print(website_url)
-            print(email_public)
-            print(address_public)
-
             cur.execute("""
                 UPDATE organizations 
                 SET phone_public = :phone_public, website_url = :website_url, 

@@ -521,6 +521,7 @@ body
 .page
   background: #ffffff
   padding-bottom: 200px
+  position: relative
 .page--dark
   background: #26303B
 .page__info
@@ -657,6 +658,8 @@ body
   align-items: stretch
   justify-content: space-between
   width: 100%
+.search__form-col
+  position: relative
 .search__form-select
   background: #ffffff
   appearance: none
@@ -669,10 +672,10 @@ body
   outline: none
   height: 100%
   box-sizing: border-box
-  min-width: 240px
+  min-width: 260px
 .search__form-input
   appearance: none
-  min-width: 420px
+  min-width: 380px
   margin-right: 16px
   padding-left: 20px
   padding-right: 20px
@@ -683,6 +686,31 @@ body
   outline: none
   height: 100%
   box-sizing: border-box
+.search__form-autocomplete
+  position: absolute
+  left: 0
+  right: 16px
+  top: calc(100% - 4px)
+  background: #f3f3f3
+  border-radius: 0 0 4px 4px
+  overflow: hidden
+.search__form-suggests
+  padding: 0
+  margin: 0
+  text-align: left
+  list-style: none
+  & li
+    padding: 8px 16px
+    font-size: 14px
+    box-sizing: border-box
+    &:last-child
+      padding-bottom: 10px
+    &:not(:last-child)
+      border-bottom: 1px solid #e6e6e6
+    &:hover
+      background: #E60047
+      color: #ffffff
+
 .search__form-submit
   padding-left: 40px
   padding-right: 40px
@@ -705,13 +733,25 @@ body
   background: #26303B
   padding-top: 20px
   padding-bottom: 28px
+  position: relative
+  z-index: 10
 .search__head-wrap
   padding-left: 118px
   padding-right: 118px
+.search__card-tags
+  margin-top: 8px
+.search__card-tag
+  padding: 4px 8px
+  font-size: 10px
+  background: #f1f1f1
+  border-radius: 2px
+  display: inline-flex
+  color: #455362
 .search__result-title
   color: #ffffff
 .search__result
   margin-top: 40px
+  padding-bottom: 120px
 .search__result-wrap
   padding-left: 118px
   padding-right: 118px
@@ -720,7 +760,7 @@ body
   width: 697px
 .search__result-item
   &:not(:last-child)
-    margin-bottom: 40px
+    margin-bottom: 60px
 .search__card-title
   margin: 0
   font-weight: 400
@@ -752,14 +792,22 @@ body
     border-bottom: 1px solid
 .search__card-rating
   margin-top: 16px
+  display: flex
+  flex-wrap: wrap
+  justify-content: flex-start
+  align-items: center
 .search__card-stars
   display: flex
   flex-wrap: wrap
+  margin-right: 16px
 .search__card-star
-  width: 20px
+  width: 12px
   display: inline-flex
   &:not(:last-child)
     margin-right: 4px
   & img
     width: 100%
     display: block
+.search__card-reviews
+  font-size: 12px
+  opacity: 0.65

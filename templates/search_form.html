@@ -1,22 +1,67 @@
 <form action="/organizations" class="search__form" method="POST">
     <div class="search__form-col">
-        <select name="" id="" class="search__form-select">
-            <option value="">Машиностроение</option>
-            <option value="">Сырьё</option>
-            <option value="">Изделия для производства</option>
-            <option value="">Инструмент</option>
+        <select name="type" id="" class="search__form-select">
+            <option value="Выберите категорию" disabled selected>Выберите категорию</option>
+            {%  for type_variant in type_variants %}
+            <option value="{{ type_variant }}" {% if type_variant == type_variant_selected %}selected{% endif %}>{{ type_variant }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="search__form-col">
-        <select name="" id="" class="search__form-select">
-            <option value="">Москва</option>
-            <option value="">Санкт-Петербург</option>
+        <select name="district" id="" class="search__form-select">
+            <option value="Выберите город" disabled selected>Выберите фед. округ</option>
+            {%  for district_variant in district_variants %}
+                <option value="{{ district_variant }}" {% if district_variant == district_variant_selected %}selected{% endif %}>{{ district_variant }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="search__form-col">
-        <input class="search__form-input" name="keyword" type="text" value="{{ keyword }}" />
+        <input class="search__form-input" id="form-search-keyword" name="keyword" type="text" value="{{ keyword }}" />
+        <div class="search__form-autocomplete">
+            <ul class="search__form-suggests" id="form-search-autocoplete"></ul>
+        </div>
     </div>
     <div class="search__form-col">
         <button class="search__form-submit" type="submit">Запустить подбор</button>
     </div>
 </form>
+
+<script>
+    const WORDS = [
+        'инструмент',
+        'инструкция',
+        'инвертор',
+        'изготовитель',
+        'иглорефлексотерапевт',
+        'издатель', 'измеритель', 'изобретатель', 'изолировщик', 'измеритель',
+        'иконописец', 'иллюзионист', 'имиджмейкер', 'иммунолог', 'инженер', 'инвестор', 'индикаторщик',
+        'имплантолог', 'инкассатор', 'инспектор', 'инструктор', 'инквизитор', 'инкрустатор'
+    ]
+    let input = document.getElementById('form-search-keyword');
+    input.addEventListener('keyup', function(event) {
+        let html = '';
+        if (input.value) {
+            let i = 0
+            for (let word of WORDS) {
+                if (word.startsWith(input.value)) {
+                    if (i <= 5)
+                    html += `<li class="search__form-suggest">${word}</li>`;
+                }
+                i++;
+            }
+        }
+        document.getElementById('form-search-autocoplete').innerHTML = html;
+
+        const myNodeList = document.querySelectorAll('ul.search__form-suggests li');
+        if( myNodeList.length) { // что-то нашлось, коллекция не пустая
+            document.querySelectorAll('li.search__form-suggest').forEach(function(e) {
+                e.addEventListener('click', function(event) {
+                    input.value = event.currentTarget.innerText
+                    setTimeout(() => {
+                        document.getElementById('form-search-autocoplete').innerHTML = ''
+                    }, 300)
+                })
+            })
+        }
+    });
+</script>
