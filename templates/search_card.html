@@ -11,6 +11,7 @@
         <div class="search__card-body">
             <div class="search__card-description">{{ row[9] if row[9] is not none }}</div>
         </div>
+        {% if row[11] is not none or row[13] is not none or row[14] is not none %}
         <div class="search__card-meta">
             {% if row[11] is not none %}
             <div class="search__card-meta-item">
@@ -28,6 +29,7 @@
             </div>
             {% endif %}
         </div>
+        {% endif %}
         <div class="search__card-rating">
             <div class="search__card-stars">
                 <span class="search__card-star"><img src="/static/assets/icons/star.svg" alt=""></span>
@@ -37,6 +39,9 @@
                 <span class="search__card-star"><img src="/static/assets/icons/star-outline.svg" alt=""></span>
             </div>
             <div class="search__card-reviews">10 отзывов</div>
+        </div>
+        <div class="search__card-products">
+            {% include "search_card_product.html" %}
         </div>
     </div>
 </div>
